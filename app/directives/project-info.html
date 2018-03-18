@@ -1,0 +1,15 @@
+<h2 class="name">{{ info.name }}</h2>
+<p class="type"><em>Project Type: </em>{{ info.type }}</p>
+<p class="timeframe"><em>Should be Done in: </em>{{ info.timeframe }} Month(s)</p>
+<!-- <md-slider-container>
+        <span>Months Adjusted</span>
+        <md-slider flex min="0" max="24" ng-model="" aria-label="Months Adjusted">
+        </md-slider>
+        <md-input-container>
+          <input flex type="number" ng-model="timemodifier">
+        </md-input-container>
+</md-slider-container> -->
+<span>Months Adjusted: {{ info.timemodifier }}</span>
+<md-button class="md-raised md-primary" ng-click="plusOne($index)">+</md-button>
+<md-button class="md-raised md-warn" ng-click="minusOne($index)">-</md-button>
+<p class="price"><em>Estimated Cost: </em>{{ info.price | currency}}</p>

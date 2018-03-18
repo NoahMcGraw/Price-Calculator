@@ -1,0 +1,60 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Price Calculator</title>
+    <link href="/app/modules/angular-material/1.1.5/angular-material.min.css" type="text/css" rel="stylesheet">
+    <link href="/app/css/stylesheet.css" type="text/css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+    <!-- https://github.com/a8m/angular-filter -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.16/angular-filter.js"></script>
+    <script src="/app/modules/angular-material/1.1.5/angular-material.min.js"></script>
+    <!-- Modules -->
+    <script src="/app/app.js"></script>
+    <!-- Controllers -->
+    <script src="/app/controllers/main-ctrl.js"></script>
+    <!-- Directives -->
+    <!-- <script src="/app/directives/project-info.js"></script> -->
+  </head>
+  <body ng-app="priceCalc" ng-cloak>
+    <div ng-controller='mainCtrl'>
+      <h1 class="appTitle">{{ appTitle }}</h1>
+      <br><br>
+      <!-- <div ng-repeat="project in projects"> -->
+       <!-- <project-info info="project"></project-info> -->
+       <div class="newProject">
+       <md-input-container>
+        <label>Project Name</label>
+        <input ng-model="newName">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Type</label>
+        <input ng-model="newType">
+      </md-input-container>
+       <md-button class="md-raised md-primary" ng-click="newProject(newName, newType)">New Project</md-button>
+      </div>
+        <h2 class="name">{{ project.name }}</h2>
+        <p class="type"><em>Project Type: </em>{{ project.type }}</p>
+        <p class="timeframe"><em>Should be Done in: </em>{{ project.timeframe }} Month(s)</p>
+        <md-slider-container>
+            <span>Months Adjusted: {{ timemodifier }}</span>
+            <md-slider min="0" max="36" ng-model="timemodifier" ng-click="update()"aria-label="Months Adjusted" id="months-slider">
+            </md-slider>
+            <md-input-container>
+              <input flex type="number" ng-model="timemodifier" ng-click="update()"aria-label="Months Adjusted">
+            </md-input-container>
+          </md-slider-container>
+        <!-- <span>Months Adjusted: {{ timemodifier }}</span>
+        <md-button class="md-raised md-primary" ng-click="plusOne(); update()">+</md-button>
+        <md-button class="md-raised md-warn" ng-click="minusOne(); update()">-</md-button> -->
+        <p class="price"><em>Estimated Cost: </em>{{ project.price | currency}}</p>
+      <!-- </div> -->
+    </div>
+  </body>
+</html>
