@@ -23,38 +23,53 @@
   </head>
   <body ng-app="priceCalc" ng-cloak>
     <div ng-controller='mainCtrl'>
-      <h1 class="appTitle">{{ appTitle }}</h1>
-      <br><br>
-      <!-- <div ng-repeat="project in projects"> -->
-       <!-- <project-info info="project"></project-info> -->
-       <div class="newProject">
-       <md-input-container>
-        <label>Project Name</label>
-        <input ng-model="newName">
-      </md-input-container>
-
-      <md-input-container>
-        <label>Type</label>
-        <input ng-model="newType">
-      </md-input-container>
-       <md-button class="md-raised md-primary" ng-click="newProject(newName, newType)">New Project</md-button>
+      <div class="mainContainer">
+        <form name="setupForm" action="/compare.html" method="get">
+          <md-content class="newProject" md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+            <div>
+              <md-input-container>
+                <label>New Project</label>
+                <input name="name" ng-model="project.name">
+              </md-input-container>
+        
+              <md-select name="type" ng-model="project.type" placeholder="Type" class="md-no-underline">
+                <md-option value="Full-Stack">Full-Stack</md-option>
+                <md-option value="Angular">Angular</md-option>
+                <md-option value="PHP">PHP</md-option>
+                <md-option value="Other">Other</md-option>
+              </md-select>
+            </div>
+          </md-content>
+          <div class="setupContainer">
+            <div class="projectInfo">
+                <h1 ng-bind="project.name"></h1>
+                <h2 ng-bind="project.type"></h2>
+            </div>
+            <p class="priceSetupContainer">Base Price per Month: 
+              <md-input-container>
+                <label>USD($)</label>
+                <input name="basePrice" type="number" ng-model="basePrice">
+              </md-input-container>
+            </p>
+            <p class="interestSetupContainer">Interest Rate Accrued per Month
+              <md-input-container>
+                <label>%</label>
+                <input name="interest" type="number" step="0.01" ng-model="interest">
+              </md-input-container>
+            </p>
+            <p class="monthSetupContainer">This project needs to be done in 
+                <md-input-container>
+                    <label>Months</label>
+                    <input name="months" type="number" ng-model="months" ng-change="comparePopUp()" required>
+                </md-input-container>
+            </p>
+          </div>
+          <div class="setupSummaryContainer">
+            <h3>This project will cost {{ setupCalcTotal() | currency }}</h3>
+            <p class="comparePopUp"><md-button type="submit" ng-click="compareClick()"><em>Compare this price with other timeframes</em></md-button></p>
+          </div>
+        </form>
       </div>
-        <h2 class="name">{{ project.name }}</h2>
-        <p class="type"><em>Project Type: </em>{{ project.type }}</p>
-        <p class="timeframe"><em>Should be Done in: </em>{{ project.timeframe }} Month(s)</p>
-        <md-slider-container>
-            <span>Months Adjusted: {{ timemodifier }}</span>
-            <md-slider min="0" max="36" ng-model="timemodifier" ng-click="update()"aria-label="Months Adjusted" id="months-slider">
-            </md-slider>
-            <md-input-container>
-              <input flex type="number" ng-model="timemodifier" ng-click="update()"aria-label="Months Adjusted">
-            </md-input-container>
-          </md-slider-container>
-        <!-- <span>Months Adjusted: {{ timemodifier }}</span>
-        <md-button class="md-raised md-primary" ng-click="plusOne(); update()">+</md-button>
-        <md-button class="md-raised md-warn" ng-click="minusOne(); update()">-</md-button> -->
-        <p class="price"><em>Estimated Cost: </em>{{ project.price | currency}}</p>
-      <!-- </div> -->
     </div>
   </body>
 </html>

@@ -1,43 +1,20 @@
 priceCalc.controller('mainCtrl', ['$scope', function($scope){
-    $scope.appTitle = "Price Calculator"
-    $scope.starterTemplate = {
-        baseprice: 100,
-        basetimeframe: 1
-    };
-    $scope.timemodifier = 0;
-    $scope.project = 
-        {
-            name: 'Your Project',
-            type: 'Angular App',
-            timeframe: 1,
-            price: 100.00,
-            timemodifier: 0,
-            pricemodifier: 0
-        }
-    $scope.plusOne = function(){
-        $scope.timemodifier += 1;
+    $scope.project = {};
+    // $scope.months = 6;
+    $scope.basePrice = 500;
+    $scope.interest = 10.25;
+    $scope.interestCalc = function(){
+        return $scope.basePrice * (1 + (($scope.interest * 0.1)/12))^(12 * ($scope.months/12));
     }
-    $scope.minusOne = function(){
-        $scope.timemodifier -= 1;
+    $scope.setupCalcTotal = function(){
+        var priceMod = ($scope.basePrice / $scope.months)
+        return $scope.interestCalc() * $scope.months;
     }
-    $scope.update = function(){
-        $scope.project.timeframe = $scope.starterTemplate.basetimeframe + $scope.timemodifier;
-        $scope.project.pricemodifier = $scope.starterTemplate.baseprice * 0.1 * $scope.timemodifier;
-        $scope.project.price = $scope.starterTemplate.baseprice + $scope.project.pricemodifier;
+    
+    $scope.comparePopUp = function(){
+        $('.comparePopUp').css('display', 'inline');
     }
-    $scope.newName = "";
-    $scope.newType = "";
-    class Project {
-        constructor (name, type){
-            this.name = name;
-            this.type = type;
-            this.timeframe = 1;
-            this.price = 100.00;
-            this.timemodifier = 0;
-            this.pricemodifier = 0;
-        }
-    }
-    $scope.newProject = function(name, type){
-        $scope.project = new Project(name, type);
+    $scope.compareClick = function(){
+        $('.mainContainer').fadeOut("slow");  
     }
 }]);

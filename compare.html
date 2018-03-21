@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Price Calculator</title>
+        <link href="/app/modules/angular-material/1.1.5/angular-material.min.css" type="text/css" rel="stylesheet">
+        <link href="/app/css/stylesheet.css" type="text/css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+        <!-- https://github.com/a8m/angular-filter -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.16/angular-filter.js"></script>
+        <script src="/app/modules/angular-material/1.1.5/angular-material.min.js"></script>
+        <!-- Modules -->
+        <script src="/app/app.js"></script>
+        <!-- Controllers -->
+        <script src="/app/controllers/compare-ctrl.js"></script>
+        <!-- Directives -->
+        <!-- <script src="/app/directives/project-info.js"></script> -->
+    </head>
+    <body ng-app="priceCalc" ng-cloak>
+        <div ng-controller='compareCtrl'>
+            <div class="mainContainer">
+                <div class="compareContainer" ng-init="monthsAdjusted='0'">
+                    <div class="projectInfoCompare">
+                        <h1 class="name">{{ project.name }}</h1>
+                        <h2 class="type">{{ project.type }}</h2>
+                    </div>
+                    <p>Right Now, Your Project will take <h3>{{ months }} Months</h3>
+                         and will Cost <h3>{{ setupCalcTotal() | currency }}</h3></p>
+                    <p>Move the Silder Below to Choose a Timeframe that works for you</p>
+                    <md-slider min="-{{ months * 2 }}" max="{{ months - 1 }}" placeholder="0" ng-model="monthsAdjusted" aria-label="Adjust the Timeframe Here">
+                    </md-slider>
+                    <h1>How about {{ monthsTotal() }} Months?</h1>
+                    <h2>This will Cost 
+                             {{ compareCalcTotal() | currency }}
+                        <!-- <div ng-if="monthsTotal < months">
+                            {{ compareCalcTotal() | currency }}
+                        </div>
+                        <div ng-if="monthsTotal > months">
+                            {{ compareCalcTotal() | currency }}
+                        </div> -->
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

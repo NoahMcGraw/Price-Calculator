@@ -3,3 +3,7 @@ body {
     background-color: #ffffffc2;
     text-align: center;
 }
+.comparePopUp {
+     display: none; 
+}
+
