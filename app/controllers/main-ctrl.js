@@ -1,20 +1,34 @@
 priceCalc.controller('mainCtrl', ['$scope', function($scope){
-    $scope.project = {};
-    // $scope.months = 6;
-    $scope.basePrice = 500;
-    $scope.interest = 10.25;
-    $scope.interestCalc = function(){
-        return $scope.basePrice * (1 + (($scope.interest * 0.1)/12))^(12 * ($scope.months/12));
+    $scope.project = {
+        interest: 10.25
+    };
+    $scope.formSubmit = function(){
+        console.log("Submitted");
+        var compareUrl = "/compare.html";
+        compareUrl += "?name=" + encodeURIComponent($scope.project.name);
+        compareUrl += "&type=" + encodeURIComponent($scope.project.type);
+        compareUrl += "&basePrice=" + encodeURIComponent($scope.project.basePrice);
+        compareUrl += "&interest=" + encodeURIComponent($scope.project.interest);
+        compareUrl += "&months=" + encodeURIComponent($scope.project.months);
+        window.open(compareUrl, '_blank');
+        // window.location.href = compareUrl;
     }
-    $scope.setupCalcTotal = function(){
-        var priceMod = ($scope.basePrice / $scope.months)
-        return $scope.interestCalc() * $scope.months;
+    $scope.copyUrl = function(){
+        var compareUrl = window.location.href;
+        compareUrl += "/compare.html";
+        compareUrl += "?name=" + encodeURIComponent($scope.project.name);
+        compareUrl += "&type=" + encodeURIComponent($scope.project.type);
+        compareUrl += "&basePrice=" + encodeURIComponent($scope.project.basePrice);
+        compareUrl += "&interest=" + encodeURIComponent($scope.project.interest);
+        compareUrl += "&months=" + encodeURIComponent($scope.project.months);
+        $scope.copyUrlBox = compareUrl;
+        
     }
-    
-    $scope.comparePopUp = function(){
-        $('.comparePopUp').css('display', 'inline');
-    }
-    $scope.compareClick = function(){
-        $('.mainContainer').fadeOut("slow");  
+    $scope.copyClipboard = function(){
+        var url = document.getElementById("copyUrl");
+        url.select();
+        document.execCommand("Copy");
+        console.log("Copied to Clipboard");
+        alert("Copied to Clipboard!");
     }
 }]);

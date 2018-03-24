@@ -1,9 +1,58 @@
-body {
-    margin: 0, auto;
-    background-color: #ffffffc2;
-    text-align: center;
-}
-.comparePopUp {
-     display: none; 
+body,html {
+    background-color: #d2e2ef;
+    background-size: cover;
 }
 
+.unisyn-hint {
+
+    margin-top: 6px;
+ 
+    font-size: 14px;
+ 
+    line-height: 14px;
+ 
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+ 
+ }md-input-container .unisyn-hint {
+ 
+    float: left;
+ 
+ }md-input-container .md-errors-spacer {
+ 
+    float: none; /*not sure why this would need to float since float throws off vertical flow*/
+ 
+ }@media (min-width: 960px) {
+ 
+    .unisyn-hint {
+ 
+        font-size: 12px;
+ 
+    }
+ 
+ }
+
+ .shadow {
+     box-shadow: 2px 2px 2px 2px lightgrey;
+ }
+ .shadowBold {
+     box-shadow: 2px 2px 4px 4px lightgray;
+ }
+ /* .projectInfo {
+     text-shadow: 4px 4px 3px lightgray;
+ } */
+ .popUp {
+     position: fixed;
+     top: 0;
+     left: 33%;
+     z-index: 5;
+     background-color: #ff7700;
+     opacity: 0.75;
+ }
+ .bgWhite {
+     background-color: #fff;
+     opacity: 1;
+ }
+ .well {
+     box-shadow: inset 2px 3px 3px lightgray;
+     background-color: hsla(190, 0%, 93%, 0.23);
+ }

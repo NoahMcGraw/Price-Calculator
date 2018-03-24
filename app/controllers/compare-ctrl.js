@@ -1,27 +1,34 @@
-priceCalc.controller('compareCtrl', ['$scope', function($scope){
+priceCalc.controller('compareCtrl', ['$scope', '$location', function($scope, $location){
+    console.log($location.search().name)
     $scope.getParse = function(){
-        var arr = [];
+        var arr = {};
         var urlSplit1 = window.location.href.split("?");
         var urlSplit2 = urlSplit1[1].split("&").map(function(val){
             // console.log(val);
             var thing = val.split("=");
-            arr.push(thing[1].replace("+", " "));
+            arr[thing[0]] = decodeURIComponent(thing[1]);
             // console.log(thing);
         });
         return arr;
     }
+    $scope.urlParams = $scope.getParse();
     $scope.project = {
-        name: $scope.getParse()[0],
-        type: $scope.getParse()[1]
+        name: $scope.urlParams.name,
+        type: $scope.urlParams.type
     };
-    $scope.months = $scope.getParse()[4];
-    $scope.basePrice = $scope.getParse()[2];
-    $scope.interest = $scope.getParse()[3];
+    $scope.months = $scope.urlParams.months;
+    $scope.basePrice = $scope.urlParams.basePrice;
+    $scope.interest = $scope.urlParams.interest;
+    $scope.calcProjectCost = $scope.basePrice;
+    $scope.changeMonthsAdjusted = function(){
+        $scope.calcProjectCost = $scope.interestCalc();
+    }
     $scope.monthsTotal = function(){
         return $scope.months - $scope.monthsAdjusted;
     }
     $scope.interestCalc = function(){
-        return $scope.basePrice * (1 + (($scope.interest * 0.1)/12))^(12 * ($scope.months/12));
+        return $scope.basePrice * Math.pow($scope.interest * 0.01 + 1, $scope.monthsAdjusted);
+        // return $scope.basePrice * (1 + (($scope.interest * 0.01)/12))^(12 * ($scope.months/12));
     }
     $scope.setupCalcTotal = function(){
         var priceMod = ($scope.basePrice / $scope.months);

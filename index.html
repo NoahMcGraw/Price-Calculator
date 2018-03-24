@@ -5,7 +5,7 @@
     <title>Price Calculator</title>
     <link href="/app/modules/angular-material/1.1.5/angular-material.min.css" type="text/css" rel="stylesheet">
     <link href="/app/css/stylesheet.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
@@ -16,6 +16,7 @@
     <script src="/app/modules/angular-material/1.1.5/angular-material.min.js"></script>
     <!-- Modules -->
     <script src="/app/app.js"></script>
+    <!-- <script src="/app/modules/themeConfig.js"></script> -->
     <!-- Controllers -->
     <script src="/app/controllers/main-ctrl.js"></script>
     <!-- Directives -->
@@ -23,52 +24,142 @@
   </head>
   <body ng-app="priceCalc" ng-cloak>
     <div ng-controller='mainCtrl'>
-      <div class="mainContainer">
-        <form name="setupForm" action="/compare.html" method="get">
-          <md-content class="newProject" md-theme="docs-dark" layout-gt-sm="row" layout-padding>
-            <div>
-              <md-input-container>
-                <label>New Project</label>
-                <input name="name" ng-model="project.name">
-              </md-input-container>
-        
-              <md-select name="type" ng-model="project.type" placeholder="Type" class="md-no-underline">
-                <md-option value="Full-Stack">Full-Stack</md-option>
-                <md-option value="Angular">Angular</md-option>
-                <md-option value="PHP">PHP</md-option>
-                <md-option value="Other">Other</md-option>
-              </md-select>
-            </div>
-          </md-content>
-          <div class="setupContainer">
-            <div class="projectInfo">
-                <h1 ng-bind="project.name"></h1>
-                <h2 ng-bind="project.type"></h2>
-            </div>
-            <p class="priceSetupContainer">Base Price per Month: 
-              <md-input-container>
-                <label>USD($)</label>
-                <input name="basePrice" type="number" ng-model="basePrice">
-              </md-input-container>
-            </p>
-            <p class="interestSetupContainer">Interest Rate Accrued per Month
-              <md-input-container>
-                <label>%</label>
-                <input name="interest" type="number" step="0.01" ng-model="interest">
-              </md-input-container>
-            </p>
-            <p class="monthSetupContainer">This project needs to be done in 
-                <md-input-container>
-                    <label>Months</label>
-                    <input name="months" type="number" ng-model="months" ng-change="comparePopUp()" required>
+      <div class="mainContainer md-padding">
+        <md-content class="shadow md-block"
+                    layout="column"
+                    layout-gt-xs="row"
+                    layout-align-gt-xs="space-between stretch">
+          <label class="md-display-3 md-padding" layout="column" layout-align="center start" flex>Price Calculator</label>
+          <img src="/app/images/unisynLogoSmall_360.png" class="md-padding" height="200px" width="200px">
+        </md-content>
+        <form name="project.form">
+            <md-content class="shadowBold" layout="column" layout-gt-xs="row" layout-align-gt-xs="space-around center">
+                <md-input-container class="md-block md-accent" layout="row" flex="100" flex-gt-xs="70">
+                  <label>New Project</label>
+                  <input name="name" ng-model="project.name" required>
+                  <div ng-messages="project.form.months.$error">
+                      <div ng-message="required">Please Enter Project Name</div>
+                  </div>
                 </md-input-container>
-            </p>
+                <md-input-container class="md-block" flex="100" flex-gt-xs="30">
+                  <label>Project Type</label>
+                  <md-select class="md-primary" name="type" ng-model="project.type" placeholder="Type" class="md-no-underline" required>
+                    <md-option value="Full-Stack">Full-Stack</md-option>
+                    <md-option value="Angular">Angular</md-option>
+                    <md-option value="PHP">PHP</md-option>
+                    <md-option value="Other">Other</md-option>
+                  </md-select>
+                </md-input-container>
+            </md-content>
+            <!-- <md-content class="projectInfo md-block"
+                        layout="column"
+                        layout-gt-sm="row"
+                        layout-align="center center"
+                        layout-align-gt-sm="space-around center">
+                <h1 ng-bind="project.name" class="md-display-2"></h1>
+                <h2 ng-bind="project.type" class="md-display-1"></h2>
+            </md-content>  -->
+          <br>
+          <div layout="column" layout-gt-sm="row" layout-align-gt-sm="space-between stretch">
+            <div class="setupContainer bgWhite shadow md-padding"
+                 layout="column"
+                 layout-align="space-around stretch"
+                 flex="100"
+                 flex-gt-sm="66">
+              <div>
+                <md-input-container class="md-block">
+                  <label>Project Cost (USD)</label>
+                  <input name="basePrice" type="number" ng-model="project.basePrice" required>
+                  <div ng-messages="project.form.basePrice.$error">
+                    <div ng-message="required">Please Enter a Cost</div>
+                  </div>
+                </md-input-container>
+              </div> 
+              <div>
+                <md-input-container class="md-block">
+                  <label>Interest Accumulated per Months Adjusted</label>
+                  <input name="interest" type="number" step="0.01" ng-model="project.interest" required>
+                  <div ng-messages="project.form.interest.$error">
+                    <div ng-message="required">Please Enter a Percentage</div>
+                  </div>
+                </md-input-container>
+              </div> 
+              <div>
+                <md-input-container class="md-block">
+                  <label>Project Timeline</label>
+                  <input name="months" type="number" ng-model="project.months" required>
+                  <div class="unisyn-hint">(in months)</div>
+                  <div ng-messages="project.form.months.$error">
+                    <div ng-message="required">Please Enter a Month</div>
+                  </div>
+                </md-input-container>
+              </div>
+            </div>
+            <div class="summaryContainer bgWhite shadow md-padding"
+                 layout="column"
+                 flex="100"
+                 flex-gt-sm="30">
+              <label class="md-headline">Project Summary</label>
+              <div layout="row" layout-align="space-between center">
+                <md-content class="bgWhite" layout="column" layout-align="center start">
+                  <label class="md-headline">{{ project.name }}</label>
+                  <label class="md-subhead">{{ project.type }}</label>
+                </md-content>
+                <img src="/app/images/unisynLogoSmall_360.png" class="md-padding" ng-show="project.form.name.$valid || project.form.type.$valid" height="150px" width="150px">
+              </div>
+              <div class="md-padding md-body-1 well" ng-show="project.form.basePrice.$valid || project.form.months.$valid">
+                <section class="md-padding" ng-show="project.form.basePrice.$valid">
+                  Right Now, this project will cost
+                  <br>
+                  <strong>{{ project.basePrice | currency }}</strong>
+                </section> 
+                <section class="md-padding" ng-show="project.form.months.$valid">
+                  And will be completed in
+                  <br>
+                  <strong>{{ project.months }}</strong>
+                  Months
+                </section>
+                <section ng-show="project.form.basePrice.$valid && project.form.months.$valid">
+                    <md-button class="md-raised md-primary">Need it Sooner?</md-button>
+                </section>
+              </div>
+            </div>
           </div>
-          <div class="setupSummaryContainer">
-            <h3>This project will cost {{ setupCalcTotal() | currency }}</h3>
-            <p class="comparePopUp"><md-button type="submit" ng-click="compareClick()"><em>Compare this price with other timeframes</em></md-button></p>
+          <div class="popUp md-padding shadowBold"
+               ng-show="project.form.$valid"
+               layout-align-gt-xs="center start"
+               flex-gt-xs="40">
+            <label class="md-headline">You're all set!</label>
+            <br>
+            <label>Choose what to do with your statement</label>
+            <md-menu>
+              <md-button class="md-icon-button" ng-mouseenter="$mdMenu.open(); copyUrl()">
+                <md-icon md-menu-origin md-svg-icon="\app\images\icons\ic_add_shopping_cart_black_24px.svg"></md-icon>
+              </md-button>
+              <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+                <md-menu-item>
+                  <md-button ng-click="formSubmit()">
+                    View In Browser
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ng-click="copyClipboard()">
+                    Copy To Clipboard
+                  </md-button>
+                  <md-input-container>
+                    <input type="text" id="copyUrl" ng-model="copyUrlBox">
+                  </md-input-container>
+                </md-menu-item>
+                <!-- <md-menu-item>
+                  <md-button>
+                    Save to Drive
+                  </md-button>
+                </md-menu-item> -->
+              </md-menu-content>
+            </md-menu>
           </div>
         </form>
+        <!-- {{ project.form | json }} -->
       </div>
     </div>
   </body>
