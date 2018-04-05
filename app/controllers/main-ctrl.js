@@ -1,43 +1,33 @@
 priceCalc.controller('mainCtrl', ['$scope', function($scope){
-    $scope.appTitle = "Price Calculator"
-    $scope.starterTemplate = {
-        baseprice: 100,
-        basetimeframe: 1
+    $scope.project = {
+        interest: 10.25
     };
-    $scope.timemodifier = 0;
-    $scope.project = 
-        {
-            name: 'Your Project',
-            type: 'Angular App',
-            timeframe: 1,
-            price: 100.00,
-            timemodifier: 0,
-            pricemodifier: 0
-        }
-    $scope.plusOne = function(){
-        $scope.timemodifier += 1;
+    $scope.formSubmit = function(){
+        console.log("Submitted");
+        var compareUrl = "/compare.html";
+        compareUrl += "?name=" + encodeURIComponent($scope.project.name);
+        compareUrl += "&type=" + encodeURIComponent($scope.project.type);
+        compareUrl += "&basePrice=" + encodeURIComponent($scope.project.basePrice);
+        compareUrl += "&interest=" + encodeURIComponent($scope.project.interest);
+        compareUrl += "&months=" + encodeURIComponent($scope.project.months);
+        window.open(compareUrl, '_blank');
+        // window.location.href = compareUrl;
     }
-    $scope.minusOne = function(){
-        $scope.timemodifier -= 1;
+    $scope.copyUrl = function(){
+        var compareUrl = window.location.href;
+        compareUrl += "/compare.html";
+        compareUrl += "?name=" + encodeURIComponent($scope.project.name);
+        compareUrl += "&type=" + encodeURIComponent($scope.project.type);
+        compareUrl += "&basePrice=" + encodeURIComponent($scope.project.basePrice);
+        compareUrl += "&interest=" + encodeURIComponent($scope.project.interest);
+        compareUrl += "&months=" + encodeURIComponent($scope.project.months);
+        $scope.copyUrlBox = compareUrl;  
     }
-    $scope.update = function(){
-        $scope.project.timeframe = $scope.starterTemplate.basetimeframe + $scope.timemodifier;
-        $scope.project.pricemodifier = $scope.starterTemplate.baseprice * 0.1 * $scope.timemodifier;
-        $scope.project.price = $scope.starterTemplate.baseprice + $scope.project.pricemodifier;
-    }
-    $scope.newName = "";
-    $scope.newType = "";
-    class Project {
-        constructor (name, type){
-            this.name = name;
-            this.type = type;
-            this.timeframe = 1;
-            this.price = 100.00;
-            this.timemodifier = 0;
-            this.pricemodifier = 0;
-        }
-    }
-    $scope.newProject = function(name, type){
-        $scope.project = new Project(name, type);
+    $scope.copyClipboard = function(){
+        var url = document.getElementById("copyUrl");
+        url.select();
+        document.execCommand("Copy");
+        console.log("Copied to Clipboard");
+        alert("Copied to Clipboard!");
     }
 }]);

@@ -5,7 +5,7 @@
     <title>Price Calculator</title>
     <link href="/app/modules/angular-material/1.1.5/angular-material.min.css" type="text/css" rel="stylesheet">
     <link href="/app/css/stylesheet.css" type="text/css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
@@ -16,45 +16,248 @@
     <script src="/app/modules/angular-material/1.1.5/angular-material.min.js"></script>
     <!-- Modules -->
     <script src="/app/app.js"></script>
+    <!-- <script src="/app/modules/themeConfig.js"></script> -->
     <!-- Controllers -->
     <script src="/app/controllers/main-ctrl.js"></script>
     <!-- Directives -->
     <!-- <script src="/app/directives/project-info.js"></script> -->
   </head>
-  <body ng-app="priceCalc" ng-cloak>
-    <div ng-controller='mainCtrl'>
-      <h1 class="appTitle">{{ appTitle }}</h1>
-      <br><br>
-      <!-- <div ng-repeat="project in projects"> -->
-       <!-- <project-info info="project"></project-info> -->
-       <div class="newProject">
-       <md-input-container>
-        <label>Project Name</label>
-        <input ng-model="newName">
-      </md-input-container>
-
-      <md-input-container>
-        <label>Type</label>
-        <input ng-model="newType">
-      </md-input-container>
-       <md-button class="md-raised md-primary" ng-click="newProject(newName, newType)">New Project</md-button>
-      </div>
-        <h2 class="name">{{ project.name }}</h2>
-        <p class="type"><em>Project Type: </em>{{ project.type }}</p>
-        <p class="timeframe"><em>Should be Done in: </em>{{ project.timeframe }} Month(s)</p>
-        <md-slider-container>
-            <span>Months Adjusted: {{ timemodifier }}</span>
-            <md-slider min="0" max="36" ng-model="timemodifier" ng-click="update()"aria-label="Months Adjusted" id="months-slider">
-            </md-slider>
-            <md-input-container>
-              <input flex type="number" ng-model="timemodifier" ng-click="update()"aria-label="Months Adjusted">
+  <body class="bgWhite" ng-app="priceCalc" ng-cloak>
+    <div class="mainContainer bgWhite" ng-controller='mainCtrl'>
+      <header class="bgWhite"
+              layout="row"
+              layout-align="space-around center">
+        <img src="/app/images/unisynLogoSmall_360.png" class="md-padding" height="120px" width="120px">
+        <md-menu hide-gt-sm>
+          <md-button aria-label="Open navigation menu"
+                     class="md-icon-button"
+                     ng-click="$mdMenu.open()">
+            <md-icon md-menu-origin md-svg-icon="\app\images\icons\ic_menu_black_24px.svg"></md-icon>
+          </md-button>
+          <md-menu-content width="4"
+                           md-selected-menu-item="currentMenuItem">
+            <md-menu-item ng-click="goto('page1')" name="page1">
+              <md-button>Page One</md-button>
+            </md-menu-item>
+            <md-menu-item ng-click="goto('page2')" name="page2">
+              <md-button>Page Two</md-button>
+            </md-menu-item>
+            <md-menu-item ng-click="goto('page3')" name="page3">
+              <md-button>Page Three</md-button>
+            </md-menu-item>
+            <md-menu-item ng-click="goto('page4')" name="page4">
+              <md-button>Page Four</md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        <md-nav-bar
+          hide
+          show-gt-sm
+          md-theme="default"
+          md-no-ink-bar="true"
+          md-selected-nav-item="currentNavItem"
+          nav-bar-aria-label="navigation links"
+          layout="row"
+          layout-align="center center"
+          flex="50">
+          <md-nav-item md-nav-click="goto('page1')" name="page1">
+            Page One
+          </md-nav-item>
+          <md-nav-item md-nav-click="goto('page2')" name="page2">
+            Page Two
+          </md-nav-item>
+          <md-nav-item md-nav-click="goto('page3')" name="page3">
+            Page Three
+          </md-nav-item>
+          <md-nav-item md-nav-click="goto('page4')" name="page4">
+            Page Four
+          </md-nav-item>
+        </md-nav-bar>
+      </header>
+      <form name="project.form">
+        <md-toolbar class="headerContainer bgCyan"
+             layout="inherit"
+             layout-align="center center">
+          <label class="md-display-3" style="font-weight: 700">Price Calculator</label>
+        </md-toolbar>
+        <md-content-container class="nameTypeContainer bgWhite shadow md-padding md-margin"
+                              md-whiteframe="5"
+                              md-theme="default"
+                              layout="column"
+                              layout-gt-sm="row"
+                              layout-align="center stretch"
+                              layout-align-gt-sm="center center">
+            <md-input-container class="md-block md-accent" flex="60">
+              <label class="md-headline">New Project</label>
+              <input name="name" ng-model="project.name" required>
+              <div ng-messages="project.form.name.$error">
+                  <div ng-message="required">Please Enter Project Name</div>
+              </div>
             </md-input-container>
-          </md-slider-container>
-        <!-- <span>Months Adjusted: {{ timemodifier }}</span>
-        <md-button class="md-raised md-primary" ng-click="plusOne(); update()">+</md-button>
-        <md-button class="md-raised md-warn" ng-click="minusOne(); update()">-</md-button> -->
-        <p class="price"><em>Estimated Cost: </em>{{ project.price | currency}}</p>
-      <!-- </div> -->
+            <md-input-container class="md-block md-accent" flex="40">
+              <label class="md-headline">Project Type</label>
+              <md-select class="md-headline md-no-underline md-accent"
+                         name="type"
+                         ng-model="project.type"
+                         required>
+                <md-option value="Full-Stack" selected>Full-Stack</md-option>
+                <md-option value="Angular">Angular</md-option>
+                <md-option value="PHP">PHP</md-option>
+                <md-option value="Other">Other</md-option>
+              </md-select>
+            </md-input-container>
+        </md-content-container>
+        <div class="bottomContainer md-margin"
+             layout="column"
+             layout-gt-sm="row"
+             layout-align-gt-sm="space-between stretch">
+          <div class="setupContainer bgWhite shadow md-padding"
+               md-whiteframe="2"
+               layout="column"
+               layout-align="start stretch"
+               flex="100"
+               flex-gt-sm="66">
+            <div class="md-vertical-margin">
+              <md-input-container class="md-block md-accent">
+                <label>Project Cost (USD)</label>
+                <input name="basePrice" type="number" ng-model="project.basePrice" required>
+                <div ng-messages="project.form.basePrice.$error">
+                  <div ng-message="required">Please Enter a Cost</div>
+                </div>
+              </md-input-container>
+            </div> 
+            <div class="md-vertical-margin">
+              <md-input-container class="md-block md-accent">
+                <label>Interest Accumulated per Months Adjusted</label>
+                <input name="interest" type="number" step="0.01" ng-model="project.interest" required>
+                <div ng-messages="project.form.interest.$error">
+                  <div ng-message="required">Please Enter a Percentage</div>
+                </div>
+              </md-input-container>
+            </div> 
+            <div class="md-vertical-margin">
+              <md-input-container class="md-block md-accent">
+                <label>Project Timeline</label>
+                <input name="months" type="number" ng-model="project.months" required>
+                <div class="unisyn-hint">(in months)</div>
+                <div ng-messages="project.form.months.$error">
+                  <div ng-message="required">Please Enter a Month</div>
+                </div>
+              </md-input-container>
+            </div>
+          </div>
+          <div class="summaryContainer bgWhite shadow md-padding"
+               md-whiteframe="2"
+               layout="column"
+               flex="100"
+               flex-gt-sm="30">
+            <label class="md-headline">Project Summary</label>
+            <div layout="row" layout-align="space-between center">
+              <md-content class="bgWhite" layout="column" layout-align="center start">
+                <label class="md-headline">{{ project.name }}</label>
+                <label class="md-subhead">{{ project.type }}</label>
+              </md-content>
+              <img src="/app/images/unisynLogoSmall_360.png" class="md-padding" ng-show="project.form.name.$valid || project.form.type.$valid" height="150px" width="150px">
+            </div>
+            <div class="md-padding md-body-1 well bgLtGray" ng-show="project.form.basePrice.$valid || project.form.months.$valid">
+              <section class="md-padding" ng-show="project.form.basePrice.$valid">
+                Right Now, this project will cost
+                <br>
+                <strong>{{ project.basePrice | currency }}</strong>
+              </section> 
+              <section class="md-padding" ng-show="project.form.months.$valid">
+                And will be completed in
+                <br>
+                <strong>{{ project.months }}</strong>
+                Months
+              </section>
+              <!-- <section ng-show="project.form.basePrice.$valid && project.form.months.$valid">
+                  <md-button ng-model="sliderBtn" class="md-raised md-primary">Need it Sooner?</md-button>
+              </section> -->
+            </div>
+            <section class="finishedBtnContainer md-padding"
+                      layout="column">
+              <md-button class="md-raised md-primary"
+                          ng-click="formSubmit()"
+                          ng-disabled="project.form.$invalid"
+                          flex>
+                View in Browser
+              </md-button>
+              <md-button class="md-raised md-primary"
+                          ng-mouseenter="copyUrl()"
+                          ng-click="copyClipboard()"
+                          ng-disabled="project.form.$invalid"
+                          flex>
+                Copy Link to Clipboard
+              </md-button>
+              <input class="ng-hide" type="text" id="copyUrl" ng-model="copyUrlBox">
+            </section>
+          </div>
+        </div>
+      </form>
+      <!-- {{ project.form | json }} -->
     </div>
+    <footer class="bgDkGray"
+            layout="column"
+            layout-gt-sm="row"
+            layout-align="center stretch"
+            layout-align-gt-sm="space-around start"
+            >
+      <section>
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <span>Search</span>
+          </div>
+        </md-toolbar>
+        <md-input-container class="md-block md-accent"
+                            md-theme="dark">
+          <label class="md-body-1">Search</label>
+          <input name="search" ng-model="search">
+        </md-input-container>
+      </section>
+      <section>
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <span>Additional Reading</span>
+          </div>
+        </md-toolbar>
+        <md-list class="md-accent md-body-1"
+                  md-colors="{color: 'accent'}"
+                  flex>
+          <md-list-item>
+              Link 1
+          </md-list-item>
+          <md-list-item>
+              Link 2
+          </md-list-item>
+          <md-list-item>
+              Link 3
+          </md-list-item>
+          <md-list-item>
+              Link 4
+          </md-list-item>
+        </md-list>
+      </section>
+      <section>
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <span>Contact Information</span>
+          </div>
+        </md-toolbar>
+        <md-list class="md-accent md-body-1"
+                  md-colors="{color: 'accent'}"
+                  flex>
+          <md-list-item>
+              Contact: UniSyn Technologies LLC
+          </md-list-item>
+          <md-list-item>
+              Email: sales@unisyntechnologies.com
+          </md-list-item>
+          <md-list-item>
+              Phone: 312-715-8261
+          </md-list-item>
+        </md-list>
+      </section>
+    </footer>
   </body>
 </html>

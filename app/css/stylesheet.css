@@ -1,5 +1,222 @@
-body {
-    margin: 0, auto;
-    background-color: #ffffffc2;
-    text-align: center;
+.unisyn-hint {
+
+    margin-top: 6px;
+ 
+    font-size: 14px;
+ 
+    line-height: 14px;
+ 
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+ 
+ }md-input-container .unisyn-hint {
+ 
+    float: left;
+ 
+ }md-input-container .md-errors-spacer {
+ 
+    float: none; /*not sure why this would need to float since float throws off vertical flow*/
+ 
+ }@media (min-width: 960px) {
+ 
+    .unisyn-hint {
+ 
+        font-size: 12px;
+ 
+    }
+ 
+ }
+
+.headerContainer {
+    padding: 10% 0px;
+    background-image: url("/app/images/calcHeader.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.constrain-container {
+
+	width: 100%;
+
+    max-width: 1200px;
+
+}
+
+
+
+.min-fill-height {
+
+	min-height: 100%;
+
+}
+
+
+
+.min-fill-width {
+
+	min-width: 100%;
+
+}
+
+
+
+.max-fill-height {
+
+	max-height: 100%;
+
+}
+
+
+
+.max-fill-width {
+
+	max-width: 100%;
+
+}
+
+
+
+.fill-height {
+
+	height: 100%;
+
+}
+
+
+
+.fill-width {
+
+	width: 100%;
+
+}
+
+
+
+.md-vertical-padding {
+
+    padding-top: 8px;
+
+    padding-bottom: 8px;
+
+}
+
+
+
+.md-vertical-margin {
+
+    margin-top: 8px;
+
+    margin-bottom: 8px;
+
+}
+
+
+
+.md-horizontal-padding {
+
+    padding-left: 8px;
+
+    padding-right: 8px;
+
+}
+
+
+
+.md-horizontal-margin {
+
+    margin-left: 8px;
+
+    margin-right: 8px;
+
+}
+
+
+
+.no-vertical-margin {
+
+    margin-top: 0;
+
+    margin-bottom: 0;
+
+}
+
+
+
+.no-horizontal-margin {
+
+    margin-left: 0;
+
+    margin-right: 0;
+
+}
+
+
+
+.margin-center {
+
+    margin: auto;
+
+}
+
+
+
+@media (min-width: 960px) {
+
+	.md-vertical-padding {
+
+		padding-top: 16px;
+
+		padding-bottom: 16px;
+
+	}
+
+
+
+	.md-vertical-margin {
+
+		margin-top: 16px;
+
+		margin-bottom: 16px;
+
+	}
+
+
+
+	.md-horizontal-padding {
+
+		padding-left: 16px;
+
+		padding-right: 16px;
+
+	}
+
+
+
+	.md-horizontal-margin {
+
+		margin-left: 16px;
+
+		margin-right: 16px;
+
+	}
+
+}
+ .well {
+    box-shadow: inset 2px 3px 3px lightgray;
+}
+
+.bgWhite {
+     background-color: #fff;
+     opacity: 1;
+}
+
+.bgCyan {
+    background-color: #00bcd4;
+}
+
+.bgLtGray {
+    background-color: hsla(190, 0%, 93%, 0.23);
+}
+
+.bgDkGray {
+    background-color: #212121;
 }
