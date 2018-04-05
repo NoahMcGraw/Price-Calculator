@@ -21,8 +21,7 @@ priceCalc.controller('mainCtrl', ['$scope', function($scope){
         compareUrl += "&basePrice=" + encodeURIComponent($scope.project.basePrice);
         compareUrl += "&interest=" + encodeURIComponent($scope.project.interest);
         compareUrl += "&months=" + encodeURIComponent($scope.project.months);
-        $scope.copyUrlBox = compareUrl;
-        
+        $scope.copyUrlBox = compareUrl;  
     }
     $scope.copyClipboard = function(){
         var url = document.getElementById("copyUrl");

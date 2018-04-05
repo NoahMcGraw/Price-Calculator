@@ -51,4 +51,7 @@ priceCalc.controller('compareCtrl', ['$scope', '$location', function($scope, $lo
             return "Error";
         }
     }
+    $scope.sliderShow = function() {
+        $scope.hiddenSliderCheckbox = true;
+    }
 }]);

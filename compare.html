@@ -22,39 +22,171 @@
         <!-- Directives -->
         <!-- <script src="/app/directives/project-info.js"></script> -->
     </head>
-    <body ng-app="priceCalc" ng-cloak>
-        <div ng-controller='compareCtrl'>
-            <div class="mainContainer md-padding md-background">
-                <div class="compareContainer" ng-init="monthsAdjusted='0'" flex>
-                    <div class="projectInfoCompare md-block"
-                         layout-gt-sm="column"
-                         layout-align-gt-sm="space-around start">
-                        <h1 class="name">{{ project.name }}</h1>
-                        <h2 class="type">{{ project.type }}</h2>
-                    </div>
-                    <div class="md-block"
-                         layout="column"
-                         layout-align="space-around center">
-                        <p>Right Now, Your Project will take <h3>{{ months }} Months</h3>
-                            and will Cost <h3>{{ basePrice | currency }}</h3></p>
-                    </div>
+    <body class="bgWhite" ng-app="priceCalc" ng-cloak>
+        <div class="mainContainer"
+             ng-controller='compareCtrl'>
+            <header class="bgWhite"
+                    layout="row"
+                    layout-align="space-around center"
+                    md-whiteframe="4">
+                <img src="/app/images/unisynLogoSmall_360.png" class="md-padding" height="120px" width="120px">
+                <md-menu hide-gt-sm>
+                    <md-button aria-label="Open navigation menu"
+                                class="md-icon-button"
+                                ng-click="$mdMenu.open()">
+                    <md-icon md-menu-origin md-svg-icon="\app\images\icons\ic_menu_black_24px.svg"></md-icon>
+                    </md-button>
+                    <md-menu-content width="4"
+                                    md-selected-menu-item="currentMenuItem">
+                    <md-menu-item ng-click="goto('page1')" name="page1">
+                        <md-button>Page One</md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-click="goto('page2')" name="page2">
+                        <md-button>Page Two</md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-click="goto('page3')" name="page3">
+                        <md-button>Page Three</md-button>
+                    </md-menu-item>
+                    <md-menu-item ng-click="goto('page4')" name="page4">
+                        <md-button>Page Four</md-button>
+                    </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-nav-bar
+                    hide
+                    show-gt-sm
+                    md-theme="default"
+                    md-no-ink-bar="true"
+                    md-selected-nav-item="currentNavItem"
+                    nav-bar-aria-label="navigation links"
+                    layout="row"
+                    layout-align="center center"
+                    flex="50">
+                    <md-nav-item md-nav-click="goto('page1')" name="page1">
+                    Page One
+                    </md-nav-item>
+                    <md-nav-item md-nav-click="goto('page2')" name="page2">
+                    Page Two
+                    </md-nav-item>
+                    <md-nav-item md-nav-click="goto('page3')" name="page3">
+                    Page Three
+                    </md-nav-item>
+                    <md-nav-item md-nav-click="goto('page4')" name="page4">
+                    Page Four
+                    </md-nav-item>
+                </md-nav-bar>
+            </header>
+            <div class="summaryContainer bgWhite md-padding">
+                <div layout="column" layout-gt-sm="row" layout-align="space-between center">
+                    <md-content class="bgWhite" layout="column" layout-align="center start" flex>
+                        <label class="md-display-2">{{ project.name }}</label>
+                        <label class="md-display-1">{{ project.type }}</label>
+                    </md-content>
+                    <img src="/app/images/unisynLogoSmall_360.png" class="md-padding" height="150px" width="150px">
+                </div>
+                <div class="md-padding md-body-1 well bgLtGray">
+                    <section class="md-padding">
+                        Right Now, this project will cost
+                        <br>
+                        <strong>{{ basePrice | currency }}</strong>
+                    </section> 
+                    <section class="md-padding">
+                        And will be completed in
+                        <br>
+                        <strong>{{ months }}</strong>
+                        Months
+                    </section>
+                    <section>
+                        <md-button class="md-raised md-primary"
+                                ng-model="sliderBtn"
+                                ng-click="sliderShow()">
+                            Need it Sooner?
+                        </md-button>
+                        <input class="ng-hide"
+                            type="checkbox"
+                            ng-model="hiddenSliderCheckbox"
+                            id="hiddenSliderCheckbox">
+                    </section>
+                </div>
+                <div ng-show="hiddenSliderCheckbox">
                     <p>Move the Silder Below to Choose a Timeframe that works for you</p>
                     <md-slider min="0"
-                               max="{{ months - 1 }}" 
-                               ng-model="monthsAdjusted"
-                               ng-change="changeMonthsAdjusted()" 
-                               aria-label="Adjust the Timeframe Here">
+                                max="{{ months - 1 }}" 
+                                ng-model="monthsAdjusted"
+                                ng-change="changeMonthsAdjusted()" 
+                                aria-label="Adjust the Timeframe Here">
                     </md-slider>
                     <div class="md-block"
-                         layout="column"
-                         layout-align="center center">
-                    <h1>How about {{ months - monthsAdjusted }} Months?</h1>
-                    <h2>This will Cost 
-                             {{ calcProjectCost | currency }}
-                    </h2>
+                            layout="column"
+                            layout-align="center center">
+                        <h1>How about {{ months - monthsAdjusted }} Months?</h1>
+                        <h2>This will Cost 
+                                {{ calcProjectCost | currency }}
+                        </h2>
                     </div>
                 </div>
             </div>
+            <footer class="bgDkGray"
+            layout="column"
+            layout-gt-sm="row"
+            layout-align="center stretch"
+            layout-align-gt-sm="space-around start">
+                <section>
+                    <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <span>Search</span>
+                    </div>
+                    </md-toolbar>
+                    <md-input-container class="md-block md-accent"
+                                        md-theme="dark">
+                    <label class="md-body-1">Search</label>
+                    <input name="search" ng-model="search">
+                    </md-input-container>
+                </section>
+                <section>
+                    <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <span>Additional Reading</span>
+                    </div>
+                    </md-toolbar>
+                    <md-list class="md-accent md-body-1"
+                            md-colors="{color: 'accent'}"
+                            flex>
+                    <md-list-item>
+                        Link 1
+                    </md-list-item>
+                    <md-list-item>
+                        Link 2
+                    </md-list-item>
+                    <md-list-item>
+                        Link 3
+                    </md-list-item>
+                    <md-list-item>
+                        Link 4
+                    </md-list-item>
+                    </md-list>
+                </section>
+                <section>
+                    <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <span>Contact Information</span>
+                    </div>
+                    </md-toolbar>
+                    <md-list class="md-accent md-body-1"
+                            md-colors="{color: 'accent'}"
+                            flex>
+                    <md-list-item>
+                        Contact: UniSyn Technologies LLC
+                    </md-list-item>
+                    <md-list-item>
+                        Email: sales@unisyntechnologies.com
+                    </md-list-item>
+                    <md-list-item>
+                        Phone: 312-715-8261
+                    </md-list-item>
+                    </md-list>
+                </section>
+            </footer>
         </div>
     </body>
 </html>
